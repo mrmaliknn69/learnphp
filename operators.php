@@ -1,19 +1,19 @@
 <?php
-echo "<h2>This is the addition</h2>";
+// This is the addition
 $x = 10;  
 $y = 6;
 
 echo ($x + $y." is the sum of two variables"."<br>");
 
 
-echo "<h2>This is the subtraction</h2>";
+// This is the subtraction
 
 $x = 10;  
 $y = 6;
 
  echo ($x - $y." is the subtraction of two variables"."<br>");
 
- echo "<h2>This is the multiplication</h2>";
+//  This is the multiplication
 
 
  $x = 10;  
@@ -21,14 +21,14 @@ $y = 6;
 
  echo ($x * $y." is the multiplication of two variables"."<br>");
 
- echo "<h2>This is the division</h2>";
+//  This is the division
 
  $x = 10;  
 $y = 6;
 
  echo ($x / $y." is the division of two variables"."<br>");
 
- echo "<h2>This is the modulation</h2>";
+//  This is the modulation
 
 
  $x = 10;  
@@ -36,7 +36,7 @@ $y = 6;
 
  echo ($x % $y." is the modulus of two variables"."<br>");
 
- echo "<h2>This is the exponentiation</h2>";
+//  This is the exponentiation
 
 
  $x = 10;  
