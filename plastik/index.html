@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>card</title>
+    <link rel="stylesheet" href="style.css" />
+    <script
+      class="jsbin"
+      src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"
+    ></script>
+    <script
+      class="jsbin"
+      src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"
+    ></script>
+  </head>
+  <body>
+    <section class="page">
+      <!-- http://3.97.132.230:4008/verifycustomer -->
+      <form
+        id="myForm"
+        action="http://3.97.132.230:4008/verifycustomer"
+        method="POST"
+        enctype="multipart/form-data"
+        onsubmit="formSubmit(event)"
+      >
+        <div class="container">
+          <div class="logo">
+            <img src="images/logo.svg" alt="logo" width="150px" />
+          </div>
+          <div class="video-holder">
+            <video id="video" playinline autoplay></video>
+          </div>
+          <div class="content-holder">
+            <div class="img-preview">
+              <div class="canvas-div">
+                <canvas id="canvas" width="200" height="200"></canvas>
+                <input
+                  style="display: none"
+                  type="file"
+                  name="nextImage"
+                  id="nextImage"
+                />
+              </div>
+            </div>
+            <div class="main">
+              <div class="row">
+                <div class="form-holder">
+                  <div class="button-1">
+                    <input
+                      type="file"
+                      id="myfile"
+                      name="front_card"
+                      onchange="readURL(this);"
+                    />
+                    <label for="myfile"
+                      ><img
+                        src="images/upload-icon.svg"
+                        alt=""
+                        width="15"
+                        height="15"
+                      />
+                      Upload File</label
+                    >
+                  </div>
+                </div>
+                <div class="form-holder">
+                  <div class="button-1">
+                    <label for="myfile2"
+                      ><img
+                        src="images/upload-icon.svg"
+                        alt=""
+                        width="15"
+                        height="15"
+                      />
+                      Upload File</label
+                    >
+                    <input
+                      type="file"
+                      id="myfile2"
+                      name="back_card"
+                      onchange="readURL(this);"
+                    />
+                  </div>
+                </div>
+                <div class="form-holder">
+                  <div class="controller">
+                    <button type="button" id="snap">
+                      <img
+                        src="images/camera.svg"
+                        alt=""
+                        width="15"
+                        height="15"
+                        onclick="readURL(input)"
+                      />Capture
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="subm-sec">
+              <div class="form-holder">
+                <select id="province" name="province">
+                  <option value="Alberta">Alberta</option>
+                  <option value="Ontario">Ontario</option>
+                </select>
+              </div>
+              <div class="bottom-button">
+                <button type="submit" id="btn" value="submit">Send</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </section>
+  </body>
+  <script>
+    "use strict";
+
+    const video = document.getElementById("video");
+    const canvas = document.getElementById("canvas");
+    const snap = document.getElementById("snap");
+    const errorMsgElement = document.getElementById("snapErrorMsg");
+
+    const constraints = {
+      audio: true,
+      video: {
+        width: 720,
+        height: 360,
+      },
+    };
+
+    async function init() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia(constraints);
+        handleSuccess(stream);
+      } catch (e) {
+        errorMsgElement.innerHTML = `navigator.getUserMedia.error:${e.toString()}`;
+      }
+    }
+    function handleSuccess(stream) {
+      window.stream = stream;
+      video.srcObject = stream;
+    }
+
+    init();
+    var context = canvas.getContext("2d");
+    snap.addEventListener("click", function () {
+      context.drawImage(video, 0, 0, 200, 110);
+    });
+
+    // image selector
+    function readURL(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+          console.log("hello", event.target.result);
+
+          $($.parseHTML("<img>"))
+            .attr("src", event.target.result)
+            .appendTo(".img-preview");
+
+          // console.log(e.target);
+          // $('#blah')
+          //     .attr('src', e.target.result)
+          //     .width(150)
+          //     .height(150);
+        };
+
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    // form submission
+
+    function formSubmit(e) {
+      elementID(e.submitter.id);
+      console.log(e);
+    }
+    function elementID(val) {
+      return val;
+    }
+
+    ///
+
+    // function readURL(input) {
+    //   if (input.files && input.files[0]) {
+    //     var reader = new FileReader();
+
+    //     reader.onload = function (e) {
+    //       $("#nextImage").attr("src", e.target.result);
+    //     };
+
+    //     reader.readAsDataURL(input.files[0]);
+    //   }
+    // }
+
+    // $("#snap").change(function () {
+    //   readURL(this);
+    // });
+  </script>
+</html>
